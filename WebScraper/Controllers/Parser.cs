@@ -42,7 +42,7 @@ namespace WebScraper.Controllers
                 var imageInfo = new ImageInfo
                 {
                     Url = item.OuterHtml.ToString(),
-                    Size = 0
+                    Size = ImageBytes(item.OuterHtml.ToString())
                 };
 
                 imageList.Add(imageInfo);
@@ -51,6 +51,18 @@ namespace WebScraper.Controllers
             return imageList;
         }
 
-        
+        private static int ImageBytes(string url)
+        {
+            try
+            {
+                byte[] imageBytes = Convert.FromBase64String(url);
+                return imageBytes.Length;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            
+        }
     }
 }
